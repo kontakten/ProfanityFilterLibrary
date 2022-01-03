@@ -9,7 +9,7 @@ namespace ConsoleTestApp
         {
             string path = @"C:\Users\coNta\Desktop\profanity.txt";
 
-            ProfanityFilterLibrary.TextFileReader textFileReader = new ProfanityFilterLibrary.TextFileReader(path);
+            ProfanityFilterLibrary.TextFileReaderService textFileReader = new ProfanityFilterLibrary.TextFileReaderService(path);
             
             Console.WriteLine($"Loading File: {path}");
 

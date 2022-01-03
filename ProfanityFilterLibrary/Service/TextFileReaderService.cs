@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class TextFileReader : ITextReader
+    public class TextFileReaderService : ITextReader
     {
         private TextReplaceLogic _textReplacer;
         
@@ -19,7 +19,7 @@ namespace ProfanityFilterLibrary
             set { _textReplacer = value; }
         }
 
-        public TextFileReader(string filepath)
+        public TextFileReaderService(string filepath)
         {
             _filePath = filepath;
 
