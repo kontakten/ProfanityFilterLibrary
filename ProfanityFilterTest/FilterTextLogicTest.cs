@@ -7,11 +7,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
 {
     public class Tests
     {
-        FilterTextLogic _filterTextLogic;
+        IFilterTextLogic _filterTextLogic;
         [SetUp]
         public void Setup()
         {
-            _filterTextLogic = new FilterTextLogic(new TextModel());
+            _filterTextLogic = FilterTextFactory.CreateFilterTextLogic();
         }
 
         [Test]
@@ -24,10 +24,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int exptectedAmount = 1;
 
             //Act
-            int CursedWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(exptectedAmount, CursedWordAmount);
+            Assert.AreEqual(exptectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
         }
 
         [Test]
@@ -38,10 +38,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 0;
 
             //Act
-            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, ActualWordAmount);
+            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
         }
 
         [Test]
@@ -52,10 +52,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 0;
 
             //Act
-            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, ActualWordAmount);
+            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 1;
 
             //Act
-            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, ActualWordAmount);
+            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
         }
 
         [Test]
@@ -80,10 +80,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 3;
 
             //Act
-            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, ActualWordAmount);
+            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
         }
 
 
@@ -142,10 +142,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             };
 
             //Act
-            IDictionary<string, int> ActualAmountOfCurseWords = _filterTextLogic.ListOfMostUsedCurseWords();
+            _filterTextLogic.ListOfMostUsedCurseWords();
 
             //Assert
-            Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(ActualAmountOfCurseWords));
+            Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(_filterTextLogic.TextModel.AmountOfCurseWords));
         }
     }
 }

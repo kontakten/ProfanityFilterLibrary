@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
     public class FilterTextLogic : IFilterTextLogic
     {
-        
+
         private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap";
         private ITextModel _textModel;
 
@@ -24,36 +22,35 @@ namespace ProfanityFilterLibrary
             _textModel = textModel;
         }
 
-        public IDictionary<string ,int> ListOfMostUsedCurseWords()
+        public void ListOfMostUsedCurseWords()
         {
-            _textModel.AmountOfCurseWords = new Dictionary<string ,int>();
+            _textModel.AmountOfCurseWords = new Dictionary<string, int>();
 
             foreach (var curseWord in _curseWordsPattern.Split('|'))
             {
                 int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"\b{curseWord}\b").Count;
-                
+
                 if (amountOfCurseWordUsed <= 0) continue;
 
                 _textModel.AmountOfCurseWords.Add(curseWord, amountOfCurseWordUsed);
             }
 
-            return _textModel.AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            _textModel.AmountOfCurseWords = _textModel.AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public int FindSumOfAllCurseWords()
+        public void FindSumOfAllCurseWords()
         {
             try
             {
                 _textModel.SumOfAllCurseWords = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern).Count;
-                return _textModel.SumOfAllCurseWords;
             }
             catch (ArgumentNullException)
             {
-                return 0;
+
             }
             catch (ArgumentException)
             {
-                return 0;
+
             }
         }
 
@@ -64,7 +61,7 @@ namespace ProfanityFilterLibrary
             try
             {
                 MatchCollection matches = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern);
-                
+
                 cursedWords = matches.Cast<Match>().Select(match => match.Value).ToList();
 
                 return cursedWords;

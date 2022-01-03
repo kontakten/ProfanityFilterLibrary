@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class TextFileReaderService
+    public class TextFileReaderService : ITextReaderService
     {
-        private TextReplaceLogic _textReplacer;
-        
+        private ITextReplaceLogic _textReplacer;
+
         private string _filePath;
 
-        public TextReplaceLogic TextReplacer
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        public ITextReplaceLogic TextReplacer
         {
             get { return _textReplacer; }
             private set { _textReplacer = value; }
@@ -22,26 +19,39 @@ namespace ProfanityFilterLibrary
         public TextFileReaderService(string filepath)
         {
             _filePath = filepath;
-
-            TextReplacer = new TextReplaceLogic(new FilterTextLogic(new TextModel()));
+            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic();
         }
-
-        public void LoadTextFromFileAsync()
+        
+        public async Task LoadTextAsync()
         {
-            ReadTextAsync();
+            await ReadTextAsync();
         }
 
         public void ValidateProfanity()
         {
             TextReplacer.ReplaceCurseWordsInText();
-            
         }
 
-        private void ReadTextAsync()
+        private async Task ReadTextAsync()
         {
-            using var reader = File.OpenText(_filePath);
-            TextReplacer.TextModel.OriginalText = reader.ReadToEnd();
+            if (File.Exists(_filePath))
+            {
+                try
+                {
+                    using var reader = File.OpenText(_filePath);
+                    TextReplacer.FilterTextLogic.TextModel.OriginalText = await reader.ReadToEndAsync();
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+
+                }
+            }
         }
 
+        public void LoadText()
+        {
+            Task task = Task.Run(() => LoadTextAsync());
+            task.Wait();
+        }
     }
 }
