@@ -6,21 +6,24 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
 {
     public class Tests
     {
+        private TextReplaceLogic _textReplaceLogic;
+
         [SetUp]
         public void Setup()
         {
+            _textReplaceLogic = new TextReplaceLogic(new FilterTextLogic(new TextModel()));
         }
 
         [Test]
         public void FindReplacedCurseWord()
         {
             //Arrange
-            ITextReplaceLogic textReplaceLogic = TextReplaceFactory.CreateTextReplaceLogic("Hello mate i'm shit");
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit";
 
             string expectedText = "Hello mate i'm s**t";
 
             //Act
-            string result = textReplaceLogic.ReplaceCurseWordsInText();
+            string result = _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
             Assert.AreEqual(expectedText, result);
@@ -30,12 +33,12 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
         public void FindReplacedCurseWordsWhichAreTheSameCurseWord()
         {
             //Arrange
-            ITextReplaceLogic textReplaceLogic = TextReplaceFactory.CreateTextReplaceLogic("Hello mate i'm shit shit shit");
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit shit shit";
 
             string expectedText = "Hello mate i'm s**t s**t s**t";
 
             //Act
-            string result = textReplaceLogic.ReplaceCurseWordsInText();
+            string result = _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
             Assert.AreEqual(expectedText, result);
@@ -45,12 +48,12 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
         public void FindReplacedCurseWords()
         {
             //Arrange
-            ITextReplaceLogic textReplaceLogic = TextReplaceFactory.CreateTextReplaceLogic("Hello mate i'm shit fuck bullshit");
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit fuck bullshit";
 
             string expectedText = "Hello mate i'm s**t f**k b******t";
 
             //Act
-            string result = textReplaceLogic.ReplaceCurseWordsInText();
+            string result = _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
             Assert.AreEqual(expectedText, result);

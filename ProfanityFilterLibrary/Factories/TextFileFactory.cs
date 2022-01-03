@@ -8,9 +8,11 @@ namespace ProfanityFilterLibrary
 {
     public static class TextFileFactory
     {
+        /*
         public static ITextModel CreateTextModel()
         {
             return new TextModel();
         }
+        */
     }
 }

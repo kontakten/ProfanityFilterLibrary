@@ -7,9 +7,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
 {
     public class Tests
     {
+        FilterTextLogic _filterTextLogic;
         [SetUp]
         public void Setup()
         {
+            _filterTextLogic = new FilterTextLogic(new TextModel());
         }
 
         [Test]
@@ -17,11 +19,12 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         {
 
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("this is bullshit");
+            _filterTextLogic.TextModel.OriginalText = "this is bullshit";
+            
             int exptectedAmount = 1;
 
             //Act
-            int CursedWordAmount = filterTextLogic.FindSumOfAllCurseWords();
+            int CursedWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
             Assert.AreEqual(exptectedAmount, CursedWordAmount);
@@ -31,11 +34,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void ValidateEmptyWord()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("");
+            _filterTextLogic.TextModel.OriginalText = "";
             int expectedAmount = 0;
 
             //Act
-            int ActualWordAmount = filterTextLogic.FindSumOfAllCurseWords();
+            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
             Assert.AreEqual(expectedAmount, ActualWordAmount);
@@ -45,11 +48,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void ValidateNonCursedWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("there nothing in this sentence");
+            _filterTextLogic.TextModel.OriginalText = "there nothing in this sentence";
             int expectedAmount = 0;
 
             //Act
-            int ActualWordAmount = filterTextLogic.FindSumOfAllCurseWords();
+            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
             Assert.AreEqual(expectedAmount, ActualWordAmount);
@@ -59,11 +62,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void ValidateSentenceWithNoSpaceWithCurseWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("thisiscrap");
+            _filterTextLogic.TextModel.OriginalText = "thisiscrap";
             int expectedAmount = 1;
 
             //Act
-            int ActualWordAmount = filterTextLogic.FindSumOfAllCurseWords();
+            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
             Assert.AreEqual(expectedAmount, ActualWordAmount);
@@ -73,11 +76,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void CheckSentenceWithSameCurseWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("this is crap crap crap");
+            _filterTextLogic.TextModel.OriginalText = "this is crap crap crap";
             int expectedAmount = 3;
 
             //Act
-            int ActualWordAmount = filterTextLogic.FindSumOfAllCurseWords();
+            int ActualWordAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
             Assert.AreEqual(expectedAmount, ActualWordAmount);
@@ -88,11 +91,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void FindMatchesOfOneCurseWord()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("this is crap");
+            _filterTextLogic.TextModel.OriginalText = "this is crap";
             List<string> expectedCurseWords = new() { "crap" };
 
             //Act
-            List<string> ActualCursedWords = filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -102,11 +105,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void FindMatchesOfCurseWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("this is crap and shit");
+            _filterTextLogic.TextModel.OriginalText = "this is crap and shit";
             List<string> expectedCurseWords = new() { "crap", "shit" };
 
             //Act
-            List<string> ActualCursedWords = filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -116,11 +119,11 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void FindNonMatchesOfCurseWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("this is nice");
+            _filterTextLogic.TextModel.OriginalText = "this is nice";
             List<string> expectedCurseWords = new();
 
             //Act
-            List<string> ActualCursedWords = filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -130,7 +133,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         public void FindListOfMostUsedCurseWords()
         {
             //Arrange
-            IFilterTextLogic filterTextLogic = FilterTextFactory.CreateFilterTextLogic("there's alot of shit shit shit in this sentence, but not alot of bullshit bullshit. Tho i have to bitch bitch bitch bitch alot");
+            _filterTextLogic.TextModel.OriginalText = "there's alot of shit shit shit in this sentence, but not alot of bullshit bullshit. Tho i have to bitch bitch bitch bitch alot";
             Dictionary<string, int> ExpectedAmountOfCurseWords = new()
             {
                 { "bitch", 4 },
@@ -139,9 +142,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             };
 
             //Act
-            IDictionary<string, int> ActualAmountOfCurseWords = filterTextLogic.ListOfMostUsedCurseWords();
-
-            //ExpectedAmountOfCurseWords = ExpectedAmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            IDictionary<string, int> ActualAmountOfCurseWords = _filterTextLogic.ListOfMostUsedCurseWords();
 
             //Assert
             Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(ActualAmountOfCurseWords));

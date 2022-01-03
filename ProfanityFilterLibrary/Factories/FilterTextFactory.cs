@@ -8,6 +8,7 @@ namespace ProfanityFilterLibrary
 {
     public static class FilterTextFactory
     {
+        /*
         public static IFilterTextLogic CreateFilterTextLogic(ITextModel textModel)
         {
             return new FilterTextLogic(textModel);
@@ -16,5 +17,6 @@ namespace ProfanityFilterLibrary
         {
             return new FilterTextLogic(textContent);
         }
+        */
     }
 }

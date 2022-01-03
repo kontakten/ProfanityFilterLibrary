@@ -22,12 +22,7 @@ namespace ProfanityFilterLibrary
             _filterTextLogic = filterTextLogic;
             _textModel = filterTextLogic.TextModel;
         }
-        public TextReplaceLogic(string textContent)
-        {
-            _textModel = TextFileFactory.CreateTextModel();
-            _textModel.OriginalText = textContent;
-            _textModel.ReplacedText = textContent;
-        }
+
         private List<string> FindCurseWordsToReplace()
         {
             List<string> CursedWords = _filterTextLogic.FindCursedWords();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal class FilterTextLogic : IFilterTextLogic
+    public class FilterTextLogic : IFilterTextLogic
     {
         
         private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap";
@@ -18,20 +18,10 @@ namespace ProfanityFilterLibrary
             get { return _textModel; }
             set { _textModel = value; }
         }
-        public FilterTextLogic()
-        {
-            
-        }
+
         public FilterTextLogic(ITextModel textModel)
         {
             _textModel = textModel;
-        }
-
-        public FilterTextLogic(string textContent)
-        {
-            _textModel = TextFileFactory.CreateTextModel();
-            _textModel.OriginalText = textContent;
-            _textModel.ReplacedText = textContent;
         }
 
         public IDictionary<string ,int> ListOfMostUsedCurseWords()

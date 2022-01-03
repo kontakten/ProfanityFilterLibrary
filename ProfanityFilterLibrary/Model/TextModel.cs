@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal class TextModel : ITextModel
+    public class TextModel : ITextModel
     {
         public string OriginalText { get; set; }
         public string Title { get; set; }
