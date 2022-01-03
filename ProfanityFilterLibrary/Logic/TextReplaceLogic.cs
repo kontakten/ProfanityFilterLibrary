@@ -47,7 +47,7 @@ namespace ProfanityFilterLibrary
             }
 
             _textModel.AmountOfCurseWords = _filterTextLogic.ListOfMostUsedCurseWords();
-            _filterTextLogic.FindSumOfAllCurseWords();
+            _textModel.SumOfAllCurseWords = _filterTextLogic.FindSumOfAllCurseWords();
 
             return _textModel.ReplacedText;
         }
