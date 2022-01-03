@@ -10,7 +10,7 @@ namespace ProfanityFilterLibrary
     {
         public static ITextModel CreateTextModel()
         {
-            return new TextFileModel();
+            return new TextModel();
         }
     }
 }
