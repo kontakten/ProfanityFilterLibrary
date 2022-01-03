@@ -139,7 +139,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             };
 
             //Act
-            Dictionary<string, int> ActualAmountOfCurseWords = filterTextLogic.ListOfMostUsedCurseWords();
+            IDictionary<string, int> ActualAmountOfCurseWords = filterTextLogic.ListOfMostUsedCurseWords();
 
             //ExpectedAmountOfCurseWords = ExpectedAmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 

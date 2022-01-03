@@ -7,28 +7,26 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal class TextReplaceLogic : ITextReplaceLogic
+    public class TextReplaceLogic : ITextReplaceLogic
     {
         readonly IFilterTextLogic _filterTextLogic;
-        private string _originalText;
-        private string _replacedText;
-
-        public string OriginalText
+        private ITextModel _textModel;
+        public ITextModel TextModel
         {
-            get { return _originalText; }
-            set { _originalText = value; }
-        }
-
-        public string ReplacedText
-        {
-            get { return _replacedText; }
-            set { _replacedText = value; }
+            get { return _textModel; }
+            set { _textModel = value; }
         }
 
         public TextReplaceLogic(IFilterTextLogic filterTextLogic)
         {
             _filterTextLogic = filterTextLogic;
-            _originalText = filterTextLogic.TextContent;
+            _textModel = filterTextLogic.TextModel;
+        }
+        public TextReplaceLogic(string textContent)
+        {
+            _textModel = TextFileFactory.CreateTextModel();
+            _textModel.OriginalText = textContent;
+            _textModel.ReplacedText = textContent;
         }
         private List<string> FindCurseWordsToReplace()
         {
@@ -41,14 +39,17 @@ namespace ProfanityFilterLibrary
         {
             List<string> CursedWords = FindCurseWordsToReplace();
 
-            _replacedText = _originalText;
+            _textModel.ReplacedText = _textModel.OriginalText;
 
             foreach (var word in CursedWords)
             {
-                _replacedText = Regex.Replace(_replacedText, @$"\b{word}\b", ReplaceCursedWordToSafeWord(word));
+                _textModel.ReplacedText = Regex.Replace(_textModel.ReplacedText, @$"\b{word}\b", ReplaceCursedWordToSafeWord(word));
             }
 
-            return _replacedText;
+            _textModel.AmountOfCurseWords = _filterTextLogic.ListOfMostUsedCurseWords();
+            _filterTextLogic.FindSumOfAllCurseWords();
+
+            return _textModel.ReplacedText;
         }
 
         private static string ReplaceCursedWordToSafeWord(string curseWord)

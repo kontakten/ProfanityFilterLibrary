@@ -2,9 +2,7 @@
 {
     public interface ITextReplaceLogic
     {
-        string OriginalText { get; set; }
-        string ReplacedText { get; set; }
-
+        public ITextModel TextModel { get; set; }
         string ReplaceCurseWordsInText();
     }
 }

@@ -13,6 +13,5 @@ namespace ProfanityFilterLibrary
         public string ReplacedText { get; set; }
         public int SumOfAllCurseWords { get; set; }
         public string Title { get; set; }
-        public string FilePath { get; set; }
     }
 }

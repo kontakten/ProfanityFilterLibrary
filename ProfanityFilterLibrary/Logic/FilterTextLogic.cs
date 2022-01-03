@@ -9,40 +9,53 @@ namespace ProfanityFilterLibrary
 {
     internal class FilterTextLogic : IFilterTextLogic
     {
+        
         private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap";
-        private string _textContent;
+        private ITextModel _textModel;
 
-        public string TextContent
+        public ITextModel TextModel
         {
-            get { return _textContent; }
-            set { _textContent = value; }
+            get { return _textModel; }
+            set { _textModel = value; }
         }
-        public FilterTextLogic(string textcontent)
+        public FilterTextLogic()
         {
-            _textContent = textcontent;
+            
+        }
+        public FilterTextLogic(ITextModel textModel)
+        {
+            _textModel = textModel;
         }
 
-        public Dictionary<string ,int> ListOfMostUsedCurseWords()
+        public FilterTextLogic(string textContent)
         {
-            Dictionary<string, int> mostUsedCurseWords = new();
+            _textModel = TextFileFactory.CreateTextModel();
+            _textModel.OriginalText = textContent;
+            _textModel.ReplacedText = textContent;
+        }
+
+        public IDictionary<string ,int> ListOfMostUsedCurseWords()
+        {
+            _textModel.AmountOfCurseWords = new Dictionary<string ,int>();
 
             foreach (var curseWord in _curseWordsPattern.Split('|'))
             {
-                int amountOfCurseWordUsed = Regex.Matches(_textContent.ToLower(), @$"\b{curseWord}\b").Count;
+                int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"\b{curseWord}\b").Count;
                 
                 if (amountOfCurseWordUsed <= 0) continue;
 
-                mostUsedCurseWords.Add(curseWord, amountOfCurseWordUsed);
+                _textModel.AmountOfCurseWords.Add(curseWord, amountOfCurseWordUsed);
             }
 
-            return mostUsedCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            return _textModel.AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         }
 
         public int FindSumOfAllCurseWords()
         {
             try
             {
-                return Regex.Matches(_textContent.ToLower(), _curseWordsPattern).Count;
+                _textModel.SumOfAllCurseWords = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern).Count;
+                return _textModel.SumOfAllCurseWords;
             }
             catch (ArgumentNullException)
             {
@@ -60,7 +73,7 @@ namespace ProfanityFilterLibrary
 
             try
             {
-                MatchCollection matches = Regex.Matches(_textContent.ToLower(), _curseWordsPattern);
+                MatchCollection matches = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern);
                 
                 cursedWords = matches.Cast<Match>().Select(match => match.Value).ToList();
 

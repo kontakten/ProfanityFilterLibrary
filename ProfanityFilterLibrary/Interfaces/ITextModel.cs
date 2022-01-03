@@ -2,7 +2,7 @@
 
 namespace ProfanityFilterLibrary
 {
-    internal interface ITextModel
+    public interface ITextModel
     {
         IDictionary<string, int> AmountOfCurseWords { get; set; }
         string OriginalText { get; set; }

@@ -7,20 +7,40 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal class TextFileReader : ITextReader
+    public class TextFileReader : ITextReader
     {
-        private ITextModel _textModel;
+        private TextReplaceLogic _textReplacer;
+        
         private string _filePath;
-        public TextFileReader(ITextModel textModel, string path)
+
+        public TextReplaceLogic TextReplacer
         {
-            _textModel = textModel;
-            _filePath = path;
+            get { return _textReplacer; }
+            set { _textReplacer = value; }
         }
 
-        public async Task ReadText()
+        public TextFileReader(string filepath)
+        {
+            _filePath = filepath;
+
+            TextReplacer = new TextReplaceLogic(new FilterTextLogic(new TextModel()));
+        }
+
+        public void LoadTextFromFileAsync()
+        {
+            ReadTextAsync();
+        }
+
+        public void ValidateProfanity()
+        {
+            TextReplacer.ReplaceCurseWordsInText();
+            
+        }
+
+        private void ReadTextAsync()
         {
             using var reader = File.OpenText(_filePath);
-            _textModel.OriginalText = await reader.ReadToEndAsync();
+            TextReplacer.TextModel.OriginalText = reader.ReadToEnd();
         }
 
     }

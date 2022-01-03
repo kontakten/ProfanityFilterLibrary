@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal class FilteredText
+    public static class TextFileFactory
     {
-        public void RenderText()
+        public static ITextModel CreateTextModel()
         {
-            //Render replaced text
+            return new TextFileModel();
         }
     }
 }

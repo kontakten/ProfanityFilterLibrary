@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    internal interface ITextReader
+    public interface ITextReader
     {
-        Task ReadText();
+        public TextReplaceLogic TextReplacer { get; set; }
+        public void LoadTextFromFileAsync();
     }
 }

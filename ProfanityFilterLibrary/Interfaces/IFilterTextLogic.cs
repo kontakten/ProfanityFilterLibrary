@@ -4,11 +4,9 @@ namespace ProfanityFilterLibrary
 {
     public interface IFilterTextLogic
     {
-        string TextContent { get; set; }
-
+        public ITextModel TextModel{ get; set; }
         List<string> FindCursedWords();
         int FindSumOfAllCurseWords();
-
-        public Dictionary<string, int> ListOfMostUsedCurseWords();
+        public IDictionary<string, int> ListOfMostUsedCurseWords();
     }
 }

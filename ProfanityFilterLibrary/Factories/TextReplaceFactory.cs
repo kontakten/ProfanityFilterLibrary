@@ -9,9 +9,13 @@ namespace ProfanityFilterLibrary
 {
     public static class TextReplaceFactory
     {
-        public static ITextReplaceLogic CreateTextReplaceLogic(string textcontent)
+        public static ITextReplaceLogic CreateTextReplaceLogic(ITextModel textModel)
         {
-            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic(textcontent));
+            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic(textModel));
+        }
+        public static ITextReplaceLogic CreateTextReplaceLogic(string textContent)
+        {
+            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic(textContent));
         }
     }
 }
