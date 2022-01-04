@@ -10,13 +10,18 @@ namespace ProfanityFilterLibrary
 
         private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap";
         private ITextModel _textModel;
-
+        private static NLog.Logger _logger;
         public ITextModel TextModel
         {
             get { return _textModel; }
             set { _textModel = value; }
         }
 
+        public FilterTextLogic(ITextModel textModel, NLog.Logger logger)
+        {
+            _textModel = textModel;
+            _logger = logger;
+        }
         public FilterTextLogic(ITextModel textModel)
         {
             _textModel = textModel;
@@ -36,12 +41,14 @@ namespace ProfanityFilterLibrary
             }
 
             _textModel.AmountOfCurseWords = _textModel.AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+
+            
         }
 
         public void FindSumOfAllCurseWords()
         {
             try
-            {
+            {   
                 _textModel.SumOfAllCurseWords = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern).Count;
             }
             catch (ArgumentNullException)
@@ -57,7 +64,7 @@ namespace ProfanityFilterLibrary
         public List<string> FindCursedWords()
         {
             List<string> cursedWords = new();
-
+            
             try
             {
                 MatchCollection matches = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern);

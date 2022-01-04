@@ -10,6 +10,7 @@ namespace ProfanityFilterLibrary.Services
     {
         private ITextReplaceLogic _textReplacer;
         private string _text;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public ITextReplaceLogic TextReplacer
         {
             get { return _textReplacer; }
@@ -17,7 +18,7 @@ namespace ProfanityFilterLibrary.Services
         }
         public TextReaderService(string text)
         {
-            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic();
+            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(Logger);
             _text = text;
         }
 

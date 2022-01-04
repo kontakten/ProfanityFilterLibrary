@@ -8,6 +8,10 @@ namespace ProfanityFilterLibrary
 {
     public static class TextReplaceFactory
     {
+        public static ITextReplaceLogic CreateTextReplaceLogic(NLog.Logger logger)
+        {
+            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic(logger));
+        }
         public static ITextReplaceLogic CreateTextReplaceLogic()
         {
             return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic());

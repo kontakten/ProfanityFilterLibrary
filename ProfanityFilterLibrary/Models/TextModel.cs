@@ -4,9 +4,9 @@ namespace ProfanityFilterLibrary
 {
     public class TextModel : ITextModel
     {
-        public string OriginalText { get; set; }
-        public string Title { get; set; }
-        public string ReplacedText { get; set; }
+        public string OriginalText { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string ReplacedText { get; set; } = string.Empty;
         public int SumOfAllCurseWords { get; set; } = 0;
         public IDictionary<string, int> AmountOfCurseWords { get; set; } = new Dictionary<string, int>();
     }

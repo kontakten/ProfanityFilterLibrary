@@ -8,6 +8,10 @@ namespace ProfanityFilterLibrary
 {
     public static class FilterTextFactory
     {
+        public static IFilterTextLogic CreateFilterTextLogic(NLog.Logger logger)
+        {
+            return new FilterTextLogic(TextModelFactory.CreateTextModel(), logger);
+        }
         public static IFilterTextLogic CreateFilterTextLogic()
         {
             return new FilterTextLogic(TextModelFactory.CreateTextModel());

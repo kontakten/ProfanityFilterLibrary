@@ -19,7 +19,7 @@ namespace ProfanityFilterLibrary
         public TextFileReaderService(string filepath)
         {
             _filePath = filepath;
-            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic();
+            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(Logger);
         }
         
         public async Task LoadTextAsync()
@@ -34,17 +34,18 @@ namespace ProfanityFilterLibrary
 
         private async Task ReadTextAsync()
         {
-            if (File.Exists(_filePath))
+            try
             {
-                try
-                {
-                    using var reader = File.OpenText(_filePath);
-                    TextReplacer.FilterTextLogic.TextModel.OriginalText = await reader.ReadToEndAsync();
-                }
-                catch (System.UnauthorizedAccessException)
-                {
+                using var reader = File.OpenText(_filePath);
+                TextReplacer.FilterTextLogic.TextModel.OriginalText = await reader.ReadToEndAsync();
+            }
+            catch (System.UnauthorizedAccessException)
+            {
 
-                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                Logger.Error(ex, "Error: File not found");
             }
         }
 
