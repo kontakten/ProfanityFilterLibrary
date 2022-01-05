@@ -64,7 +64,6 @@
                                 <MudListItem Text="@(CurseWord.Key + " " + CurseWord.Value)"  Icon="@Icons.Material.Filled.StarRate" />
                             }
                         }
-                    
                     </MudList>
                 </MudPaper>
            </MudItem>
@@ -131,6 +130,8 @@
         ReplaceText = _textFileReader.TextReplacer.FilterTextLogic.TextModel.ReplacedText;
         SumOfAllCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.SumOfAllCurseWords;
         AmountOfCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.AmountOfCurseWords;
+
+        Snackbar.Add($"File Upload succes !", Severity.Success);
     }
 
     string UnfilteredSampleText = "Enter profanity right here you twat";
