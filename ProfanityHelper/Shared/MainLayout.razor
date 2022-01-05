@@ -87,6 +87,7 @@
 
     void HandleText()
     {
+        //TODO: Create only once - and only call validate after crated
         _textFileReader = new ProfanityFilterLibrary.TextReaderService(OriginalText);
         _textFileReader.LoadText();
 
