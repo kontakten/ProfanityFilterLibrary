@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfanityFilterTest", "Prof
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTestApp", "ConsoleTestApp\ConsoleTestApp.csproj", "{C5FA51BE-EF11-4B05-8D2C-15963F034F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfanityHelper", "ProfanityHelper\ProfanityHelper.csproj", "{5B2C7AE6-75A6-4A2E-BD7E-29D81BC9695F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfanityHelper", "ProfanityHelper\ProfanityHelper.csproj", "{543161D6-1440-48CA-AB31-7892709FB3D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{C5FA51BE-EF11-4B05-8D2C-15963F034F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5FA51BE-EF11-4B05-8D2C-15963F034F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5FA51BE-EF11-4B05-8D2C-15963F034F75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B2C7AE6-75A6-4A2E-BD7E-29D81BC9695F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B2C7AE6-75A6-4A2E-BD7E-29D81BC9695F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B2C7AE6-75A6-4A2E-BD7E-29D81BC9695F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B2C7AE6-75A6-4A2E-BD7E-29D81BC9695F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543161D6-1440-48CA-AB31-7892709FB3D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543161D6-1440-48CA-AB31-7892709FB3D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543161D6-1440-48CA-AB31-7892709FB3D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543161D6-1440-48CA-AB31-7892709FB3D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

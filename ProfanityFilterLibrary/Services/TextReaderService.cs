@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfanityFilterLibrary.Services
+namespace ProfanityFilterLibrary
 {
-    internal class TextReaderService : ITextReaderService
+    public class TextReaderService : ITextReaderService
     {
         private ITextReplaceLogic _textReplacer;
         private string _text;

@@ -8,7 +8,7 @@ namespace ProfanityFilterLibrary
     public class FilterTextLogic : IFilterTextLogic
     {
 
-        private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap";
+        private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap|pussy|nigger|asshole|dick|dickface";
         private ITextModel _textModel;
         private static NLog.Logger _logger;
         public ITextModel TextModel
