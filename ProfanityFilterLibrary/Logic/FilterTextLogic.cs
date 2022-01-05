@@ -27,13 +27,13 @@ namespace ProfanityFilterLibrary
             _textModel = textModel;
         }
 
-        public void ListOfMostUsedCurseWords()
+        public void FindListOfMostUsedCurseWords()
         {
             _textModel.AmountOfCurseWords = new Dictionary<string, int>();
 
             foreach (var curseWord in _curseWordsPattern.Split('|'))
             {
-                int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"\b{curseWord}\b").Count;
+                int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"{curseWord}").Count;
 
                 if (amountOfCurseWordUsed <= 0) continue;
 
@@ -61,7 +61,7 @@ namespace ProfanityFilterLibrary
             }
         }
 
-        public List<string> FindCursedWords()
+        public List<string> GetCurseWordsList()
         {
             List<string> cursedWords = new();
             

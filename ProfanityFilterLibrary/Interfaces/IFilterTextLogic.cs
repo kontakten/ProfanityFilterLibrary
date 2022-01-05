@@ -5,8 +5,8 @@ namespace ProfanityFilterLibrary
     public interface IFilterTextLogic
     {
         public ITextModel TextModel { get; set; }
-        List<string> FindCursedWords();
+        List<string> GetCurseWordsList();
         void FindSumOfAllCurseWords();
-        public void ListOfMostUsedCurseWords();
+        public void FindListOfMostUsedCurseWords();
     }
 }

@@ -95,7 +95,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             List<string> expectedCurseWords = new() { "crap" };
 
             //Act
-            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.GetCurseWordsList();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -109,7 +109,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             List<string> expectedCurseWords = new() { "crap", "shit" };
 
             //Act
-            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.GetCurseWordsList();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -123,7 +123,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             List<string> expectedCurseWords = new();
 
             //Act
-            List<string> ActualCursedWords = _filterTextLogic.FindCursedWords();
+            List<string> ActualCursedWords = _filterTextLogic.GetCurseWordsList();
 
             //Assert
             CollectionAssert.AreEqual(expectedCurseWords, ActualCursedWords);
@@ -142,7 +142,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             };
 
             //Act
-            _filterTextLogic.ListOfMostUsedCurseWords();
+            _filterTextLogic.FindListOfMostUsedCurseWords();
 
             //Assert
             Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(_filterTextLogic.TextModel.AmountOfCurseWords));

@@ -20,7 +20,7 @@ namespace ProfanityFilterLibrary
 
         private List<string> FindCurseWordsToReplace()
         {
-            List<string> CursedWords = _filterTextLogic.FindCursedWords();
+            List<string> CursedWords = _filterTextLogic.GetCurseWordsList();
 
             return CursedWords;
         }
@@ -33,10 +33,10 @@ namespace ProfanityFilterLibrary
 
             foreach (var word in CursedWords)
             {
-                _filterTextLogic.TextModel.ReplacedText = Regex.Replace(_filterTextLogic.TextModel.ReplacedText, @$"\b{word}\b", ReplaceCursedWordToSafeWord(word));
+                _filterTextLogic.TextModel.ReplacedText = Regex.Replace(_filterTextLogic.TextModel.ReplacedText, @$"{word}", ReplaceCursedWordToSafeWord(word));
             }
 
-            _filterTextLogic.ListOfMostUsedCurseWords();
+            _filterTextLogic.FindListOfMostUsedCurseWords();
             _filterTextLogic.FindSumOfAllCurseWords();
         }
 

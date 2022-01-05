@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ConsoleTestApp
 {
@@ -6,9 +7,10 @@ namespace ConsoleTestApp
     {
         static void Main(string[] args)
         {
+            /*
             string path = @"C:\Users\coNta\Desktop\profanity.txt";
 
-            ProfanityFilterLibrary.ITextReaderService textFileReader = new ProfanityFilterLibrary.TextFileReaderService(path);
+            ProfanityFilterLibrary.ITextReaderService textFileReader = new ProfanityFilterLibrary.TextReaderService("");
             
 
             Console.WriteLine($"Loading File: {path}");
@@ -33,6 +35,7 @@ namespace ConsoleTestApp
             }
 
             Console.ReadKey();
+            */
         }
     }
 }
