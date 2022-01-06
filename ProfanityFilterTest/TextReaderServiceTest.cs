@@ -10,7 +10,7 @@ namespace ProfanityFilterTest.TextReaderServiceTest
 {
     public class Test
     {
-        ProfanityTextReaderService _textReaderService;
+        IProfanityReaderService _textReaderService;
 
         [SetUp]
         public void Setup()
@@ -19,13 +19,13 @@ namespace ProfanityFilterTest.TextReaderServiceTest
         }
 
         [Test]
-        public void FindCursedWords()
+        public async Task FindCursedWords()
         {
             //Arrange
-            _textReaderService = new ProfanityTextReaderService("shit");
+            _textReaderService = TextReaderServiceFactory.CreateTextReaderService("shit");
 
             //Act
-            _textReaderService.ValidateProfanity();
+            await _textReaderService.ValidateProfanity();
 
             //Assert
             

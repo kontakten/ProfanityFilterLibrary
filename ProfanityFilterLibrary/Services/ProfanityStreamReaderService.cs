@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class ProfanityStreamReaderService
+    public class ProfanityStreamReaderService : IProfanityReaderService
     {
         #region Privates
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class ProfanityTextReaderService
+    public class ProfanityTextReaderService : IProfanityReaderService
     {
         #region Privates
 
@@ -42,9 +42,9 @@ namespace ProfanityFilterLibrary
         /// <summary>
         /// 
         /// </summary>
-        public void ValidateProfanity()
+        public async Task ValidateProfanity()
         {
-            _textReplacer.ReplaceCurseWordsInText();
+            await Task.Run(()=> _textReplacer.ReplaceCurseWordsInText());
         }
         #endregion
     }

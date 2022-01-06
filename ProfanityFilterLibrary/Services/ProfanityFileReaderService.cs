@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class ProfanityFileReaderService
+    public class ProfanityFileReaderService : IProfanityReaderService
     {
         #region Privates
 
@@ -45,9 +45,9 @@ namespace ProfanityFilterLibrary
         /// <summary>
         /// 
         /// </summary>
-        public void ValidateProfanity()
+        public async Task ValidateProfanity()
         {
-            ReadText();
+            await ReadText();
             _textReplacer.ReplaceCurseWordsInText();
         }
 
@@ -55,7 +55,7 @@ namespace ProfanityFilterLibrary
         /// 
         /// </summary>
         /// <returns></returns>
-        private void ReadText()
+        private async Task ReadText()
         {
             if (File.Exists(_filePath))
                 try
@@ -63,7 +63,7 @@ namespace ProfanityFilterLibrary
                     try
                     {
                         using var reader = File.OpenText(_filePath);
-                        TextReplacer.TextModel.OriginalText = reader.ReadToEnd();
+                        TextReplacer.TextModel.OriginalText = await reader.ReadToEndAsync();
                     }
                     catch (System.UnauthorizedAccessException)
                     {
