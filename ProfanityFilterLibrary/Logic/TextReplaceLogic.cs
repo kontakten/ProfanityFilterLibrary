@@ -60,15 +60,15 @@ namespace ProfanityFilterLibrary
         {
             List<string> CursedWords = _filterTextLogic.GetCurseWordsList();
 
-            _filterTextLogic.TextModel.ReplacedText = _filterTextLogic.TextModel.OriginalText;
+            _textModel.ReplacedText = _textModel.OriginalText;
 
             foreach (var word in CursedWords)
             {
                 _filterTextLogic.TextModel.ReplacedText = Regex.Replace(_filterTextLogic.TextModel.ReplacedText, @$"{word}", ReplaceCursedWordToSafeWord(word));
             }
 
-            _filterTextLogic.FindListOfMostUsedCurseWords();
-            _filterTextLogic.FindSumOfAllCurseWords();
+            _textModel.AmountOfCurseWords = _filterTextLogic.FindListOfMostUsedCurseWords();
+            _textModel.SumOfAllCurseWords = _filterTextLogic.FindSumOfAllCurseWords();
         }
         #endregion
 

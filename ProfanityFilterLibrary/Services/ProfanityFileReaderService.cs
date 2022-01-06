@@ -1,21 +1,24 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProfanityFilterLibrary
 {
-    public class TextReaderService
+    public class ProfanityFileReaderService
     {
         #region Privates
 
         private ITextReplaceLogic _textReplacer;
-        private Stream _fileStream;
+        private string _filePath;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         #endregion
 
         #region Properties
-        
+
         public ITextReplaceLogic TextReplacer
         {
             get { return _textReplacer; }
@@ -29,23 +32,12 @@ namespace ProfanityFilterLibrary
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="filestream"></param>
-        public TextReaderService(Stream filestream)
-        {
-            _fileStream = filestream;
-            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(TextModelFactory.CreateTextModel());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="profanityText"></param>
-        public TextReaderService(string profanityText)
+        public ProfanityFileReaderService(string filePath)
         {
             _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(TextModelFactory.CreateTextModel());
-            _textReplacer.TextModel.OriginalText = profanityText;
+            _filePath = filePath;
         }
-
         #endregion
 
         #region Public Methods
@@ -55,6 +47,7 @@ namespace ProfanityFilterLibrary
         /// </summary>
         public void ValidateProfanity()
         {
+            ReadText();
             _textReplacer.ReplaceCurseWordsInText();
         }
 
@@ -62,21 +55,29 @@ namespace ProfanityFilterLibrary
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task ReadTextAsync()
+        private void ReadText()
         {
-            try
-            {
-                using var StreamReader = new StreamReader(_fileStream, Encoding.UTF8);
-                _textReplacer.TextModel.OriginalText = await StreamReader.ReadToEndAsync();
-            }
-            catch (System.UnauthorizedAccessException)
-            {
+            if (File.Exists(_filePath))
+                try
+                {
+                    try
+                    {
+                        using var reader = File.OpenText(_filePath);
+                        TextReplacer.TextModel.OriginalText = reader.ReadToEnd();
+                    }
+                    catch (System.UnauthorizedAccessException)
+                    {
 
-            }
-            catch (FileNotFoundException ex)
-            {
-                Logger.Error(ex, "Error: File not found");
-            }
+                    }
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Logger.Error(ex, "Error: File not found");
+                }
         }
         #endregion
     }
