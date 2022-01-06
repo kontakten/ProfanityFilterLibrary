@@ -97,19 +97,17 @@
     void HandleText()
     {
         _textFileReader = new ProfanityFilterLibrary.TextReaderService(OriginalText);
-        _textFileReader.LoadText();
 
         _textFileReader.ValidateProfanity();
-        ReplaceText = _textFileReader.TextReplacer.FilterTextLogic.TextModel.ReplacedText;
-        SumOfAllCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.SumOfAllCurseWords;
-        AmountOfCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.AmountOfCurseWords;
+        ReplaceText = _textFileReader.TextReplacer.TextModel.ReplacedText;
+        SumOfAllCurseWords = _textFileReader.TextReplacer.TextModel.SumOfAllCurseWords;
+        AmountOfCurseWords = _textFileReader.TextReplacer.TextModel.AmountOfCurseWords;
     }
 
     async Task UploadFile(InputFileChangeEventArgs e)
     {
         long maxFileSize = 1024 * 1024 * 15;
 
-        //Do your validations here
         Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
 
         if(e.File.ContentType != "text/plain")
@@ -123,13 +121,13 @@
         using var responseStream = await fileContent.ReadAsStreamAsync();
         _textFileReader = new ProfanityFilterLibrary.TextReaderService(responseStream);
         
-        await _textFileReader.LoadTextAsync();
+        await _textFileReader.ReadTextAsync();
 
         _textFileReader.ValidateProfanity();
-        OriginalText = _textFileReader.TextReplacer.FilterTextLogic.TextModel.OriginalText;
-        ReplaceText = _textFileReader.TextReplacer.FilterTextLogic.TextModel.ReplacedText;
-        SumOfAllCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.SumOfAllCurseWords;
-        AmountOfCurseWords = _textFileReader.TextReplacer.FilterTextLogic.TextModel.AmountOfCurseWords;
+        OriginalText = _textFileReader.TextReplacer.TextModel.OriginalText;
+        ReplaceText = _textFileReader.TextReplacer.TextModel.ReplacedText;
+        SumOfAllCurseWords = _textFileReader.TextReplacer.TextModel.SumOfAllCurseWords;
+        AmountOfCurseWords = _textFileReader.TextReplacer.TextModel.AmountOfCurseWords;
 
         Snackbar.Add($"File Upload succes !", Severity.Success);
     }

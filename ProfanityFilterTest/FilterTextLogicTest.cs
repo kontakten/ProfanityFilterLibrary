@@ -11,7 +11,7 @@ namespace ProfanityFilterTest.FilterTextLogicTest
         [SetUp]
         public void Setup()
         {
-            _filterTextLogic = FilterTextFactory.CreateFilterTextLogic();
+            _filterTextLogic = FilterTextFactory.CreateFilterTextLogic(TextModelFactory.CreateTextModel());
         }
 
         [Test]
@@ -24,10 +24,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int exptectedAmount = 1;
 
             //Act
-            _filterTextLogic.FindSumOfAllCurseWords();
+            int actualAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(exptectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
+            Assert.AreEqual(exptectedAmount, actualAmount);
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 1;
 
             //Act
-            _filterTextLogic.FindSumOfAllCurseWords();
+            int actualAmount = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
+            Assert.AreEqual(expectedAmount, actualAmount);
         }
 
         [Test]
@@ -80,10 +80,10 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             int expectedAmount = 3;
 
             //Act
-            _filterTextLogic.FindSumOfAllCurseWords();
+            int actualSum = _filterTextLogic.FindSumOfAllCurseWords();
 
             //Assert
-            Assert.AreEqual(expectedAmount, _filterTextLogic.TextModel.SumOfAllCurseWords);
+            Assert.AreEqual(expectedAmount, actualSum);
         }
 
 
@@ -136,16 +136,16 @@ namespace ProfanityFilterTest.FilterTextLogicTest
             _filterTextLogic.TextModel.OriginalText = "there's alot of shit shit shit in this sentence, but not alot of bullshit bullshit. Tho i have to bitch bitch bitch bitch alot";
             Dictionary<string, int> ExpectedAmountOfCurseWords = new()
             {
+                { "shit", 5 },
                 { "bitch", 4 },
-                { "shit", 3 },
                 { "bullshit", 2 }
             };
 
             //Act
-            _filterTextLogic.FindListOfMostUsedCurseWords();
+            IDictionary<string, int> ActualAmountOfCurseWord = _filterTextLogic.FindListOfMostUsedCurseWords();
 
             //Assert
-            Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(_filterTextLogic.TextModel.AmountOfCurseWords));
+            Assert.IsTrue(ExpectedAmountOfCurseWords.SequenceEqual(ActualAmountOfCurseWord));
         }
     }
 }

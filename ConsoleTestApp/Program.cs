@@ -7,35 +7,30 @@ namespace ConsoleTestApp
     {
         static void Main(string[] args)
         {
-            /*
-            string path = @"C:\Users\coNta\Desktop\profanity.txt";
-
-            ProfanityFilterLibrary.ITextReaderService textFileReader = new ProfanityFilterLibrary.TextReaderService("");
             
+            string profanityText = "shit this is shitty fuck";
 
-            Console.WriteLine($"Loading File: {path}");
-
-            textFileReader.LoadText();
-
-            Console.WriteLine($"Original Text: {textFileReader.TextReplacer.FilterTextLogic.TextModel.OriginalText}");
+            ProfanityFilterLibrary.TextReaderService textFileReader = new (profanityText);
+            
+            Console.WriteLine($"Original Text: {textFileReader.TextReplacer.TextModel.OriginalText}");
 
             Console.WriteLine($"Validating profanity....");
 
             textFileReader.ValidateProfanity();
 
-            Console.WriteLine($"Replaced Text: {textFileReader.TextReplacer.FilterTextLogic.TextModel.ReplacedText}");
+            Console.WriteLine($"Replaced Text: {textFileReader.TextReplacer.TextModel.ReplacedText}");
 
-            Console.WriteLine($"Curse Words in total: {textFileReader.TextReplacer.FilterTextLogic.TextModel.SumOfAllCurseWords}");
+            Console.WriteLine($"Curse Words in total: {textFileReader.TextReplacer.TextModel.SumOfAllCurseWords}");
 
             Console.WriteLine($"Most used curse word:");
 
-            foreach (var curseWord in textFileReader.TextReplacer.FilterTextLogic.TextModel.AmountOfCurseWords)
+            foreach (var curseWord in textFileReader.TextReplacer.TextModel.AmountOfCurseWords)
             {
                 Console.WriteLine($"Word: {curseWord.Key} - Amount used: {curseWord.Value}");
             }
 
             Console.ReadKey();
-            */
+            
         }
     }
 }

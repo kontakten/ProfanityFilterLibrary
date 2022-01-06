@@ -6,43 +6,68 @@ namespace ProfanityFilterLibrary
 {
     public class TextReaderService
     {
-        private ITextReplaceLogic _textReplacer;
+        #region Privates
 
+        private ITextReplaceLogic _textReplacer;
         private Stream _fileStream;
-        private string _text;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+        #endregion
+
+        #region Properties
+        
         public ITextReplaceLogic TextReplacer
         {
             get { return _textReplacer; }
             private set { _textReplacer = value; }
         }
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filestream"></param>
         public TextReaderService(Stream filestream)
         {
             _fileStream = filestream;
-            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(Logger);
-        }
-        public TextReaderService(string text)
-        {
-            _text = text;
-            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(Logger);
-        }
-        public async Task LoadTextAsync()
-        {
-            await ReadTextAsync();
+            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(TextModelFactory.CreateTextModel());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profanityText"></param>
+        public TextReaderService(string profanityText)
+        {
+            _textReplacer = TextReplaceFactory.CreateTextReplaceLogic(TextModelFactory.CreateTextModel());
+            _textReplacer.TextModel.OriginalText = profanityText;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void ValidateProfanity()
         {
-            TextReplacer.ReplaceCurseWordsInText();
+            _textReplacer.ReplaceCurseWordsInText();
         }
 
-        private async Task ReadTextAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task ReadTextAsync()
         {
             try
             {
-                using var sr = new StreamReader(_fileStream, Encoding.UTF8);
-                TextReplacer.FilterTextLogic.TextModel.OriginalText = await sr.ReadToEndAsync();
+                using var StreamReader = new StreamReader(_fileStream, Encoding.UTF8);
+                _textReplacer.TextModel.OriginalText = await StreamReader.ReadToEndAsync();
             }
             catch (System.UnauthorizedAccessException)
             {
@@ -53,9 +78,6 @@ namespace ProfanityFilterLibrary
                 Logger.Error(ex, "Error: File not found");
             }
         }
-        public void LoadText()
-        {
-            TextReplacer.FilterTextLogic.TextModel.OriginalText = _text;
-        }
+        #endregion
     }
 }

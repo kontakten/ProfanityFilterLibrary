@@ -2,7 +2,7 @@
 {
     public interface ITextReplaceLogic
     {
-        public IFilterTextLogic FilterTextLogic { get; set; }
+        public ITextModel TextModel { get; set; } 
         void ReplaceCurseWordsInText();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,10 @@ namespace ProfanityFilterLibrary
 {
     public static class TextReplaceFactory
     {
-        public static ITextReplaceLogic CreateTextReplaceLogic(NLog.Logger logger)
+
+        public static ITextReplaceLogic CreateTextReplaceLogic(ITextModel textModel)
         {
-            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic(logger));
-        }
-        public static ITextReplaceLogic CreateTextReplaceLogic()
-        {
-            return new TextReplaceLogic(FilterTextFactory.CreateFilterTextLogic());
+            return new TextReplaceLogic(textModel);
         }
     }
 }

@@ -8,6 +8,5 @@ namespace ProfanityFilterLibrary
         string OriginalText { get; set; }
         string ReplacedText { get; set; }
         int SumOfAllCurseWords { get; set; }
-        string Title { get; set; }
     }
 }

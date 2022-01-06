@@ -7,60 +7,96 @@ namespace ProfanityFilterLibrary
 {
     public class FilterTextLogic : IFilterTextLogic
     {
+        #region Privates
 
         private readonly string _curseWordsPattern = @"shit|fuck|cock|bitch|bullshit|crap|pussy|nigger|asshole|dick|dickface";
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private ITextModel _textModel;
-        private static NLog.Logger _logger;
+
+        #endregion
+
+        #region Properties
         public ITextModel TextModel
         {
             get { return _textModel; }
             set { _textModel = value; }
         }
+        #endregion
 
-        public FilterTextLogic(ITextModel textModel, NLog.Logger logger)
-        {
-            _textModel = textModel;
-            _logger = logger;
-        }
+        #region Constructors
+
+        /// <summary>
+        /// Constructor which injects TextModel, and Logger.
+        /// </summary>
+        /// <param name="textModel">Interface of TextModel</param>
+        /// <param name="logger">Logger</param>
         public FilterTextLogic(ITextModel textModel)
         {
             _textModel = textModel;
         }
 
-        public void FindListOfMostUsedCurseWords()
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// public void method - to find list of most used curse words
+        /// </summary>
+        public IDictionary<string, int> FindListOfMostUsedCurseWords()
         {
-            _textModel.AmountOfCurseWords = new Dictionary<string, int>();
+            Dictionary<string, int> AmountOfCurseWords = new Dictionary<string, int>();
 
-            foreach (var curseWord in _curseWordsPattern.Split('|'))
+            try
             {
-                int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"{curseWord}").Count;
+                foreach (var curseWord in _curseWordsPattern.Split('|'))
+                {
+                    int amountOfCurseWordUsed = Regex.Matches(_textModel.OriginalText.ToLower(), @$"{curseWord}").Count;
 
-                if (amountOfCurseWordUsed <= 0) continue;
+                    if (amountOfCurseWordUsed <= 0) continue;
 
-                _textModel.AmountOfCurseWords.Add(curseWord, amountOfCurseWordUsed);
+                    AmountOfCurseWords.Add(curseWord, amountOfCurseWordUsed);
+                }
+
+                return AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
-
-            _textModel.AmountOfCurseWords = _textModel.AmountOfCurseWords.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-
-            
+            catch (ArgumentNullException ex)
+            {
+                Logger.Log(NLog.LogLevel.Error, "", ex);
+                return AmountOfCurseWords;
+            }
+            catch (ArgumentException ex)
+            {
+                return AmountOfCurseWords;
+            }
+            catch (Exception ex)
+            {
+                return AmountOfCurseWords;
+            }
         }
 
-        public void FindSumOfAllCurseWords()
+        /// <summary>
+        /// public void method - to find a sum of alle curse words
+        /// </summary>
+        public int FindSumOfAllCurseWords()
         {
             try
             {   
-                _textModel.SumOfAllCurseWords = Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern).Count;
+                return Regex.Matches(_textModel.OriginalText.ToLower(), _curseWordsPattern).Count;
             }
             catch (ArgumentNullException)
             {
-
+                return 0;
             }
             catch (ArgumentException)
             {
-
+                return 0;
             }
         }
 
+        /// <summary>
+        /// public method which returns a list of strings. The list of strings are all the cursewords from textmodels original text property.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetCurseWordsList()
         {
             List<string> cursedWords = new();
@@ -83,5 +119,7 @@ namespace ProfanityFilterLibrary
             }
 
         }
+
+        #endregion
     }
 }

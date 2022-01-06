@@ -11,14 +11,14 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
         [SetUp]
         public void Setup()
         {
-            _textReplaceLogic = TextReplaceFactory.CreateTextReplaceLogic();
+            _textReplaceLogic = TextReplaceFactory.CreateTextReplaceLogic(TextModelFactory.CreateTextModel());
         }
 
         [Test]
         public void FindReplacedCurseWord()
         {
             //Arrange
-            _textReplaceLogic.FilterTextLogic.TextModel.OriginalText = "Hello mate i'm shit";
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit";
 
             string expectedText = "Hello mate i'm s**t";
 
@@ -26,14 +26,14 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
             _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
-            Assert.AreEqual(expectedText, _textReplaceLogic.FilterTextLogic.TextModel.ReplacedText);
+            Assert.AreEqual(expectedText, _textReplaceLogic.TextModel.ReplacedText);
         }
 
         [Test]
         public void FindReplacedCurseWordsWhichAreTheSameCurseWord()
         {
             //Arrange
-            _textReplaceLogic.FilterTextLogic.TextModel.OriginalText = "Hello mate i'm shit shit shit";
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit shit shit";
 
             string expectedText = "Hello mate i'm s**t s**t s**t";
 
@@ -41,22 +41,22 @@ namespace ProfanityFilterTest.ReplaceTextLogicTest
             _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
-            Assert.AreEqual(expectedText, _textReplaceLogic.FilterTextLogic.TextModel.ReplacedText);
+            Assert.AreEqual(expectedText, _textReplaceLogic.TextModel.ReplacedText);
         }
 
         [Test]
         public void FindReplacedCurseWords()
         {
             //Arrange
-            _textReplaceLogic.FilterTextLogic.TextModel.OriginalText = "Hello mate i'm shit fuck bullshit";
+            _textReplaceLogic.TextModel.OriginalText = "Hello mate i'm shit fuck bullshit";
 
-            string expectedText = "Hello mate i'm s**t f**k b******t";
+            string expectedText = "Hello mate i'm s**t f**k bulls**t";
 
             //Act
             _textReplaceLogic.ReplaceCurseWordsInText();
 
             //Assert
-            Assert.AreEqual(expectedText, _textReplaceLogic.FilterTextLogic.TextModel.ReplacedText);
+            Assert.AreEqual(expectedText, _textReplaceLogic.TextModel.ReplacedText);
         }
     }
 }
