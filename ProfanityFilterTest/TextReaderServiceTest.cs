@@ -28,7 +28,6 @@ namespace ProfanityFilterTest.TextReaderServiceTest
             await _textReaderService.ValidateProfanity();
 
             //Assert
-            
         }
     }
 }

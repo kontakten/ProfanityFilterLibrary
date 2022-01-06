@@ -23,7 +23,7 @@ namespace ProfanityFilterLibrary
 
         #region Constructors
         /// <summary>
-        /// Constructor which injects FilterTextLogic.
+        /// Constructor which injects Textmodel.
         /// </summary>
         /// <param name="filterTextLogic"></param>
         public TextReplaceLogic(ITextModel textModel)
@@ -71,7 +71,6 @@ namespace ProfanityFilterLibrary
             _textModel.SumOfAllCurseWords = _filterTextLogic.FindSumOfAllCurseWords();
         }
         #endregion
-
 
     }
 }

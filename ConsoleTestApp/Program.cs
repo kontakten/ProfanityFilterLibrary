@@ -12,7 +12,7 @@ namespace ConsoleTestApp
             string path = "bandeord.txt";
 
             _textFileReaderService = ProfanityFilterLibrary.TextReaderServiceFactory.CreateFileReaderService(path);
-            
+
             Console.WriteLine($"Original Text: {_textFileReaderService.TextReplacer.TextModel.OriginalText}");
 
             Console.WriteLine($"Validating profanity....");
